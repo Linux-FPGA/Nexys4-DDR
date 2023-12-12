@@ -40,12 +40,12 @@
 proc checkRequiredFiles { origin_dir} {
   set status true
   set files [list \
- "[file normalize "$Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd"]"\
- "[file normalize "$Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd"]"\
- "[file normalize "$Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd"]"\
- "[file normalize "$Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"\
- "[file normalize "$Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd"]"\
- "[file normalize "$Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp"]"\
+ "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd"]"\
+ "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd"]"\
+ "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd"]"\
+ "[file normalize "$origin_dir/../../Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"\
+ "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd"]"\
+ "[file normalize "$origin_dir/../../Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp"]"\
   ]
   foreach ifile $files {
     if { ![file isfile $ifile] } {
@@ -135,7 +135,7 @@ if { $validate_required } {
 }
 
 # Create project
-create_project LED $origin_dir/LED -part xc7a100tcsg324-1
+create_project ${_xil_proj_name_} ./${_xil_proj_name_} -part xc7a100tcsg324-1
 
 # Set the directory path for the new project
 set proj_dir [get_property directory [current_project]]
@@ -171,9 +171,9 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 set obj [get_filesets sources_1]
 # Add local files from the original project (-no_copy_sources specified)
 set files [list \
- [file normalize "${origin_dir}/Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd" ]\
- [file normalize "${origin_dir}/Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd" ]\
- [file normalize "${origin_dir}/Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd" ]\
+ [file normalize "${origin_dir}/../../Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd" ]\
+ [file normalize "${origin_dir}/../../Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd" ]\
+ [file normalize "${origin_dir}/../../Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd" ]\
 ]
 set added_files [add_files -fileset sources_1 $files]
 
@@ -209,7 +209,7 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 set obj [get_filesets constrs_1]
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize "$origin_dir/Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"
+set file "[file normalize "$origin_dir/../../Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"
 set file_added [add_files -norecurse -fileset $obj [list $file]]
 set file "new/NEXYS4-DDR-Master.xdc"
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
