@@ -23,12 +23,12 @@
 # 2. The following source(s) files that were local or imported into the original project.
 #    (Please see the '$orig_proj_dir' and '$origin_dir' variable setting below at the start of the script)
 #
-#    "/media/ryan/SPACE0/Vivado_Projects/Vivado2023.2/Nexys4/Nexys4_led0/Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd"
-#    "/media/ryan/SPACE0/Vivado_Projects/Vivado2023.2/Nexys4/Nexys4_led0/Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd"
-#    "/media/ryan/SPACE0/Vivado_Projects/Vivado2023.2/Nexys4/Nexys4_led0/Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd"
-#    "/media/ryan/SPACE0/Vivado_Projects/Vivado2023.2/Nexys4/Nexys4_led0/Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"
-#    "/media/ryan/SPACE0/Vivado_Projects/Vivado2023.2/Nexys4/Nexys4_led0/Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd"
-#    "/media/ryan/SPACE0/Vivado_Projects/Vivado2023.2/Nexys4/Nexys4_led0/Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp"
+#    "/Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd"
+#    "/Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd"
+#    "/Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd"
+#    "/Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"
+#    "/Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd"
+#    "/Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp"
 #
 # 3. The following remote source files that were added to the original project:-
 #
@@ -578,5 +578,3 @@ move_dashboard_gadget -name {timing_1} -row 0 -col 1
 move_dashboard_gadget -name {utilization_2} -row 1 -col 1
 move_dashboard_gadget -name {methodology_1} -row 2 -col 1
 
-# write bitstream
-write_bitstream -force "${origin_dir}/${arch}/${design_name}.bit"
