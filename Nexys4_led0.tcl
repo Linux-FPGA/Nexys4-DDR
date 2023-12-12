@@ -40,12 +40,12 @@
 proc checkRequiredFiles { origin_dir} {
   set status true
   set files [list \
- "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd"]"\
- "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd"]"\
- "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd"]"\
- "[file normalize "$origin_dir/../../Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"\
- "[file normalize "$origin_dir/../../Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd"]"\
- "[file normalize "$origin_dir/../../Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp"]"\
+ "[file normalize "$Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd"]"\
+ "[file normalize "$Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd"]"\
+ "[file normalize "$Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd"]"\
+ "[file normalize "$Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"\
+ "[file normalize "$Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd"]"\
+ "[file normalize "$Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp"]"\
   ]
   foreach ifile $files {
     if { ![file isfile $ifile] } {
@@ -57,7 +57,7 @@ proc checkRequiredFiles { origin_dir} {
   return $status
 }
 # Set the reference directory for source file relative paths (by default the value is script directory path)
-set origin_dir "."
+set origin_dir [file dirname [info script]]
 
 # Use origin directory path location variable, if specified in the tcl shell
 if { [info exists ::origin_dir_loc] } {
@@ -121,7 +121,7 @@ if { $::argc > 0 } {
 }
 
 # Set the directory path for the original project from where this script was exported
-set orig_proj_dir "[file normalize "$origin_dir/../../"]"
+set orig_proj_dir "[file normalize "$origin_dir/"]"
 
 # Check for paths and files needed for project creation
 set validate_required 0
@@ -171,9 +171,9 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 set obj [get_filesets sources_1]
 # Add local files from the original project (-no_copy_sources specified)
 set files [list \
- [file normalize "${origin_dir}/../../Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd" ]\
- [file normalize "${origin_dir}/../../Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd" ]\
- [file normalize "${origin_dir}/../../Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd" ]\
+ [file normalize "${origin_dir}/Nexys4_led0.srcs/sources_1/new/LED_SWITCH_FlipFlop.vhd" ]\
+ [file normalize "${origin_dir}/Nexys4_led0.srcs/sources_1/new/LED_Toggle_Project.vhd" ]\
+ [file normalize "${origin_dir}/Nexys4_led0.srcs/sources_1/new/Test_SW_LED.vhd" ]\
 ]
 set added_files [add_files -fileset sources_1 $files]
 
@@ -209,7 +209,7 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 set obj [get_filesets constrs_1]
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize "$origin_dir/../../Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"
+set file "[file normalize "$origin_dir/Nexys4_led0.srcs/constrs_1/new/NEXYS4-DDR-Master.xdc"]"
 set file_added [add_files -norecurse -fileset $obj [list $file]]
 set file "new/NEXYS4-DDR-Master.xdc"
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
@@ -227,7 +227,7 @@ if {[string equal [get_filesets -quiet sim_1] ""]} {
 set obj [get_filesets sim_1]
 # Add local files from the original project (-no_copy_sources specified)
 set files [list \
- [file normalize "${origin_dir}/../../Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd" ]\
+ [file normalize "${origin_dir}/Nexys4_led0.srcs/sim_1/new/LED_SWITCH_FlipFlop_TB.vhd" ]\
 ]
 set added_files [add_files -fileset sim_1 $files]
 
@@ -249,7 +249,7 @@ set_property -name "top_lib" -value "xil_defaultlib" -objects $obj
 set obj [get_filesets utils_1]
 # Add local files from the original project (-no_copy_sources specified)
 set files [list \
- [file normalize "${origin_dir}/../../Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp" ]\
+ [file normalize "${origin_dir}/Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp" ]\
 ]
 set added_files [add_files -fileset utils_1 $files]
 
@@ -291,7 +291,7 @@ if { $obj != "" } {
 
 }
 set obj [get_runs synth_1]
-set_property -name "incremental_checkpoint" -value "$proj_dir/Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp" -objects $obj
+set_property -name "incremental_checkpoint" -value "$proj_dir/../Nexys4_led0.srcs/utils_1/imports/synth_1/Test_SW_LED.dcp" -objects $obj
 set_property -name "auto_incremental_checkpoint" -value "1" -objects $obj
 set_property -name "strategy" -value "Vivado Synthesis Defaults" -objects $obj
 
@@ -577,3 +577,6 @@ move_dashboard_gadget -name {drc_1} -row 2 -col 0
 move_dashboard_gadget -name {timing_1} -row 0 -col 1
 move_dashboard_gadget -name {utilization_2} -row 1 -col 1
 move_dashboard_gadget -name {methodology_1} -row 2 -col 1
+
+# write bitstream
+write_bitstream -force "${origin_dir}/${arch}/${design_name}.bit"
